@@ -1,0 +1,29 @@
+let numberofinputsvalues = dateCanvassed.length-1;
+let hashrecords={};
+let x = 0;
+while (x <= numberofinputsvalues){ // Interate through array look for object with uniqueID
+let City = homeCity[x] ? homeCity[x].replace(/\s+|\-/g, '_') : "unknown";
+let county = lookupCounty[City] ? lookupCounty[City] : "Other";
+let uniquieID = dateCanvassed[x] + results[x]+campaign[x] +county; //find record.uniquied in arrary records of current record if found add to count if not create record
+if (hashrecords[uniquieID]){
+​
+//hashrecords[uniquieID].count=+ canvassedAttempts[x];
+hashrecords[uniquieID].attempt=canvassedAttempts[x]+hashrecords[uniquieID].attempt;
+}
+else{
+hashrecords[uniquieID]={
+dateContacted: dateCanvassed[x],
+result: results[x],
+campaign: campaign[x],
+county: county,
+//count:1,
+attempt: 1
+};
+}
+x++;
+}
+var resul = Object.keys(hashrecords).map(function(uniquieID) {
+return { uniquieID, record: hashrecords[uniquieID]};
+});
+output=resul;
+console.log(resul);
